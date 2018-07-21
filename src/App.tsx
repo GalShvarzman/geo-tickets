@@ -1,22 +1,63 @@
 import * as React from 'react';
 import './App.css';
+import MapContainer from "./components/map-container";
+import SideBar from "./components/side-bar";
+import {IState} from "./state/store";
+import {connect} from "react-redux";
+import {Dispatch} from "redux";
+import {onCreateNewTicket} from "./state/actions";
 
-import logo from './logo.svg';
-
-class App extends React.Component {
-  public render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.tsx</code> and save to reload.
-        </p>
-      </div>
-    );
-  }
+export interface ITicket {
+    lat:number,
+    lng:number
 }
 
-export default App;
+interface IAppStateProps {
+    tickets:ITicket[]
+}
+
+
+interface IAppDispatchProps {
+    onCreateNewTicket(ticket:ITicket):void
+}
+
+type IAppProps = IAppStateProps & IAppDispatchProps;
+
+class App extends React.Component<IAppProps, {}>{
+    constructor(props:IAppProps){
+        super(props);
+    }
+
+    public onCreateNewTicket = (ticket:ITicket) => {
+        this.props.onCreateNewTicket(ticket);
+    };
+
+    public render() {
+        return (
+            <div className="App">
+                <div className="side-bar-left">
+                     <SideBar onCreateTicket={this.onCreateNewTicket}/>
+                </div>
+                <div className="map-right">
+                    <MapContainer/>
+                </div>
+            </div>
+        );
+      }
+}
+
+const mapStateToProps = (state:IState, ownProps:any):IAppStateProps => {
+    return {
+        tickets: state.tickets
+    }
+};
+
+const mapDispatchToProps = (dispatch:Dispatch, ownProps:any):IAppDispatchProps => {
+    return {
+        onCreateNewTicket : (ticket:ITicket) => {
+            dispatch(onCreateNewTicket(ticket))
+        }
+    }
+};
+
+export default connect<IAppStateProps, IAppDispatchProps>(mapStateToProps, mapDispatchToProps)(App);

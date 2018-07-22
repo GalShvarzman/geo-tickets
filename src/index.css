@@ -3,5 +3,11 @@ body, html {
   padding: 0;
   font-family: "Roboto", sans-serif;
   box-sizing: border-box;
-  height: 100%;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    height: 100%;
 }

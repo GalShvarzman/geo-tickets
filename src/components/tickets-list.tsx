@@ -41,7 +41,7 @@ const styles = theme => ({
         padding:0,
     },
     header:{
-        fontSize:'1.4em'
+        fontSize:'1.3em'
     }
 });
 

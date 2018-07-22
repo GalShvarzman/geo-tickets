@@ -6,6 +6,12 @@
     overflow: hidden;
 }
 
+.main{
+    margin: 0 auto;
+    overflow: hidden;
+    height: 100%;
+}
+
 .header{
     height: 10%;
     width: 100%;
@@ -20,11 +26,13 @@
 .side-bar-left{
     height: 100%;
     width: 350px;
+    border-right: 1px solid #22206c;
 }
 
 #map{
-    width: 100%;
+    width: 1150px;
     height: 100%;
     position: absolute;
+    overflow: scroll;
 }
 

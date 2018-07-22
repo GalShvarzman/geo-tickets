@@ -45,7 +45,7 @@ class App extends React.Component<IAppProps, {}>{
 
     public render() {
         return (
-            <>
+            <div className="main">
                 <div className="header">
                     <HeaderAppBar/>
                 </div>
@@ -57,7 +57,7 @@ class App extends React.Component<IAppProps, {}>{
                         <MapContainer tickets={this.props.tickets} ref={this.mapContainerRef}/>
                     </div>
                 </div>
-            </>
+            </div>
         );
       }
 }

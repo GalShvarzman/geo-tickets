@@ -3,12 +3,12 @@ import {ITicket} from "../models/ticket";
 const tickets:ITicket[] = [];
 
 class TicketsDB {
-    createNewTicket(ticket:ITicket){
+    async createNewTicket(ticket:ITicket){
         tickets.push(ticket);
         return ticket;
     }
 
-    getAllTickets(){
+    async getAllTickets(){
         return [...tickets];
     }
 }

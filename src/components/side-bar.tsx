@@ -1,8 +1,11 @@
 import * as React from 'react';
 import {ITicket} from "../App";
+import TicketsList from "./tickets-list";
+import './side-bar.css';
 
 interface ISideBarProps {
-    onCreateTicket(ticket:ITicket):void
+    onCreateTicket(ticket:ITicket):void,
+    tickets:ITicket[]
 }
 
 class SideBar extends React.PureComponent<ISideBarProps, {}>{
@@ -24,10 +27,16 @@ class SideBar extends React.PureComponent<ISideBarProps, {}>{
 
     render(){
         return(
-            <div>
-                <label>Lat: </label><input ref={this.latRef} type="number"/>
-                <label>Lng: </label><input ref={this.lngRef} type="number"/>
-                <button onClick={this.onClickSave}>Save</button>
+            <div className="side-bar">
+                <div className="input-wrapper">
+                    <label>Lat: </label><input ref={this.latRef} type="number"/>
+                </div>
+                <div className="input-wrapper">
+                    <label>Lng: </label><input ref={this.lngRef} type="number"/>
+                </div>
+                <button className="save-btn" onClick={this.onClickSave}>Save</button>
+
+                <TicketsList tickets={this.props.tickets}/>
             </div>
         )
     }

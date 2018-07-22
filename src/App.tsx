@@ -8,6 +8,7 @@ import {Dispatch} from "redux";
 import {onCreateNewTicket} from "./state/actions";
 
 export interface ITicket {
+    id?:string,
     lat:number,
     lng:number
 }
@@ -24,22 +25,28 @@ interface IAppDispatchProps {
 type IAppProps = IAppStateProps & IAppDispatchProps;
 
 class App extends React.Component<IAppProps, {}>{
+    mapContainerRef:React.RefObject<any>;
+
     constructor(props:IAppProps){
         super(props);
+        this.mapContainerRef = React.createRef();
     }
 
     public onCreateNewTicket = (ticket:ITicket) => {
+        this.mapContainerRef.current.onAddNewTicket(ticket);
         this.props.onCreateNewTicket(ticket);
     };
+
+
 
     public render() {
         return (
             <div className="App">
                 <div className="side-bar-left">
-                     <SideBar onCreateTicket={this.onCreateNewTicket}/>
+                     <SideBar tickets={this.props.tickets} onCreateTicket={this.onCreateNewTicket}/>
                 </div>
                 <div className="map-right">
-                    <MapContainer/>
+                    <MapContainer tickets={this.props.tickets} ref={this.mapContainerRef}/>
                 </div>
             </div>
         );

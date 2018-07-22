@@ -2,11 +2,12 @@ import {ITicket} from "../App";
 import {Dispatch} from "redux";
 import {createNewTicket, getAllTickets} from "../server-api";
 
-export function onCreateNewTicket(latAndLng:ITicket):any{
+export function onCreateNewTicket(ticket:ITicket):any{
     return async (dispatch:Dispatch) => {
         try {
-            await createNewTicket(latAndLng);
-            dispatch(setTicketsAfterCreateNewTicket(latAndLng))
+            const newTicket = await createNewTicket(ticket);
+            debugger;
+            dispatch(setTicketsAfterCreateNewTicket(newTicket));
         }
         catch (e) {
             //fixme
@@ -14,7 +15,7 @@ export function onCreateNewTicket(latAndLng:ITicket):any{
     }
 }
 
-export function loadAllTickets(){
+export function loadAllTickets():any{
     return async (dispatch:Dispatch) => {
         try{
             const tickets = await getAllTickets();
@@ -26,7 +27,7 @@ export function loadAllTickets(){
     }
 }
 
-function setAllTickets(tickets:ITicket[]){
+function setAllTickets(tickets:any){
     return {
         type: 'SET_ALL_TICKETS',
         tickets

@@ -5,6 +5,9 @@ import './index.css';
 import registerServiceWorker from './registerServiceWorker';
 import {store} from "./state/store";
 import {Provider} from "react-redux";
+import {loadAllTickets} from "./state/actions";
+
+store.dispatch(loadAllTickets());
 
 ReactDOM.render(
     <Provider store={store}>

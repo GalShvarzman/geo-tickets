@@ -1,0 +1,17 @@
+input{
+    width: 12em;
+}
+
+.input-wrapper{
+    padding:0.4em 1em;
+}
+
+.save-btn{
+    text-align: center;
+    padding-top: 1em;
+
+}
+
+.side-bar{
+    text-align: center;
+}

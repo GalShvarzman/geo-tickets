@@ -1,8 +1,8 @@
 import {ITicket} from "./App";
 import {request} from "./utils/request";
 
-export async function createNewTicket(latAndLng:ITicket){
-    return await post('/tickets', latAndLng)
+export async function createNewTicket(ticket:ITicket){
+    return await post('/tickets', ticket)
 }
 
 export async function getAllTickets(){

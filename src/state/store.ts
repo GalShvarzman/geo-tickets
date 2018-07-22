@@ -1,9 +1,10 @@
 import { createStore, applyMiddleware, compose} from 'redux';
 import {reducer} from './reducer';
 import thunk from 'redux-thunk';
+import {ITicket} from "../App";
 
 export interface IState{
-    tickets:any[],
+    tickets:ITicket[],
     [i:string]:any
 }
 

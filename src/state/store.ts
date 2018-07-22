@@ -5,11 +5,13 @@ import {ITicket} from "../App";
 
 export interface IState{
     tickets:ITicket[],
+    errorMsg:string|null,
     [i:string]:any
 }
 
 const initialState:IState = {
-    tickets : []
+    tickets : [],
+    errorMsg:null
 };
 
 const composeEnhancers = (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

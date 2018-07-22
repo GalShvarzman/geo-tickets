@@ -4,11 +4,14 @@ import TicketsList from "./tickets-list";
 import './side-bar.css';
 import Input from '@material-ui/core/Input';
 import Button from '@material-ui/core/Button';
+import {store} from "../state/store";
+import {setErrorMsg} from "../state/actions";
 
 interface ISideBarProps {
     onCreateTicket(ticket:ITicket):void,
     tickets:ITicket[],
     onDeleteTickets(ticketsToDeleteIds:string[]):void,
+    errorMsg:string|null
 }
 
 class SideBar extends React.PureComponent<ISideBarProps, {}>{
@@ -29,6 +32,10 @@ class SideBar extends React.PureComponent<ISideBarProps, {}>{
         this.latRef.current.value = "";
         this.lngRef.current.value = "";
     };
+
+    componentWillUnmount(){
+        store.dispatch(setErrorMsg(null));
+    }
 
     render(){
         return(
@@ -55,6 +62,7 @@ class SideBar extends React.PureComponent<ISideBarProps, {}>{
                 <Button className="save-btn" onClick={this.onClickSave} variant="outlined" color="primary">
                     Save
                 </Button>
+                <p className="side-bar-error-msg" hidden={!this.props.errorMsg}>{this.props.errorMsg}</p>
                 <TicketsList onDeleteTickets={this.props.onDeleteTickets} tickets={this.props.tickets}/>
             </div>
         )

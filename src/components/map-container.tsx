@@ -61,6 +61,7 @@ class MapContainer extends React.Component<IMapContainerProps, IMapContainerStat
         });
 
         google.maps.event.addListener(marker, 'click', (event) => {
+            debugger;
             this.state.map.setCenter(marker.getPosition());
             infoWindow.open(this.state.map, marker);
         });
@@ -72,8 +73,29 @@ class MapContainer extends React.Component<IMapContainerProps, IMapContainerStat
         });
     }
 
-    onAddNewTicket = (ticket:ITicket) => {
-        return this.addMarker(ticket);
+    onAddNewTicket = async(ticket:ITicket) => {
+        debugger;
+        return await this.addMarker(ticket);
+    };
+
+    onDeleteTicket = (ticketsToDeleteIds:ITicket[]) => {
+        const tickets = [...this.props.tickets];
+        let deletedTickets = tickets.filter((ticket:any)=>{
+            return ticketsToDeleteIds.indexOf(ticket.id) !== -1
+        });
+
+        let markersClone = [...this.state.markers];
+        for(let i = 0; i<markersClone.length; i++){
+            const lat = markersClone[i].position.lat();
+            const lng = markersClone[i].position.lng();
+            const ticketIndex = deletedTickets.findIndex((ticket:ITicket)=>{
+                return ticket.lat === lat && ticket.lng === lng;
+            });
+            if(ticketIndex !== -1){
+                markersClone[i].setMap(null);
+            }
+        }
+        this.setState({markers:markersClone});
     };
 
     createNewMarker = (lat, lng) => {
@@ -86,9 +108,13 @@ class MapContainer extends React.Component<IMapContainerProps, IMapContainerStat
     };
 
     addMarker = (ticket:ITicket) => {
-        const marker = this.createNewMarker(ticket.lat, ticket.lng);
-        this.state.map.setCenter(marker.getPosition());
-        this.setState({markers:this.state.markers.concat([marker])})
+        return new Promise((resolve, reject)=>{
+            const marker = this.createNewMarker(ticket.lat, ticket.lng);
+            this.state.map.setCenter(marker.getPosition());
+            this.setState({markers:this.state.markers.concat([marker])}, ()=>{
+                resolve(marker);
+            });
+        })
     };
 
     handleScriptLoad = () => {

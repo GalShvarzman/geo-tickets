@@ -9,7 +9,7 @@
 }
 
 .side-bar-create-new-ticket-header{
-    margin-bottom: 0.2em;
+    margin-bottom: 0.3em;
     font-size: 1.4em;
     color: #22206c;
 }
@@ -17,4 +17,8 @@
 .save-btn{
     display: block;
     margin-top:1em;
+}
+
+.side-bar-error-msg{
+    color:red;
 }

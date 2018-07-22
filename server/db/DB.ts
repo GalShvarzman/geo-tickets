@@ -3,19 +3,20 @@ import {ITicket} from "../models/ticket";
 let tickets:ITicket[] = [];
 
 class TicketsDB {
-    async createNewTicket(ticket:ITicket){
+    createNewTicket(ticket:ITicket){
         tickets.push(ticket);
-        return ticket;
+        return Promise.resolve(ticket);
     }
 
     async getAllTickets(){
-        return [...tickets];
+        return Promise.resolve([...tickets]);
     }
 
     async deleteTickets(ticketsToDeleteIds:string[]){
         tickets = tickets.filter((ticket)=>{
             return ticketsToDeleteIds.indexOf(ticket.id) === -1
         });
+        return Promise.resolve();
     }
 }
 

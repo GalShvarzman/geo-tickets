@@ -9,7 +9,7 @@ export function onCreateNewTicket(ticket:ITicket):any{
             dispatch(setTicketsAfterCreateNewTicket(newTicket));
         }
         catch (e) {
-            //fixme
+            dispatch(setErrorMsg("Create new ticket failed"));
         }
     }
 }
@@ -18,11 +18,10 @@ export function onDeleteTickets(ticketsToDeleteIds:string[]):any {
     return async (dispatch: Dispatch) => {
         try{
             await deleteTickets(ticketsToDeleteIds);
-            debugger;
             dispatch(setTicketsAfterDeleteTickets(ticketsToDeleteIds))
         }
         catch (e) {
-
+            dispatch(setErrorMsg("Delete tickets failed"));
         }
     }
 }
@@ -34,7 +33,7 @@ export function loadAllTickets():any{
             dispatch(setAllTickets(tickets));
         }
         catch (e) {
-            //fixme
+            dispatch(setErrorMsg("Load tickets failed"));
         }
     }
 }
@@ -50,6 +49,13 @@ function setTicketsAfterCreateNewTicket(ticket:ITicket){
     return{
         type: 'SET_TICKETS_AFTER_CREATE_NEW_TICKET',
         ticket
+    }
+}
+
+export function setErrorMsg(errorMsg:string|null){
+    return{
+        type:'SET_ERROR_MSG',
+        errorMsg
     }
 }
 

@@ -7,6 +7,7 @@ import {connect} from "react-redux";
 import {Dispatch} from "redux";
 import {onCreateNewTicket, onDeleteTickets} from "./state/actions";
 import HeaderAppBar from './components/app-bar';
+
 export interface ITicket {
     id?:string,
     lat:number,
@@ -14,9 +15,9 @@ export interface ITicket {
 }
 
 interface IAppStateProps {
-    tickets:ITicket[]
+    tickets:ITicket[],
+    errorMsg:string|null
 }
-
 
 interface IAppDispatchProps {
     onCreateNewTicket(ticket:ITicket):void,
@@ -33,13 +34,16 @@ class App extends React.Component<IAppProps, {}>{
         this.mapContainerRef = React.createRef();
     }
 
-    public onCreateNewTicket = (ticket:ITicket) => {
-        this.mapContainerRef.current.onAddNewTicket(ticket);
+    public onCreateNewTicket = async(ticket:ITicket) => {
+        const marker = await this.mapContainerRef.current.onAddNewTicket(ticket);
+        ticket.lat = marker.position.lat();
+        ticket.lng = marker.position.lng();
         this.props.onCreateNewTicket(ticket);
     };
 
     public onDeleteTickets = (ticketsToDeleteIds:string[])=>{
         this.props.onDeleteTickets(ticketsToDeleteIds);
+        this.mapContainerRef.current.onDeleteTicket(ticketsToDeleteIds);
     };
 
 
@@ -51,7 +55,7 @@ class App extends React.Component<IAppProps, {}>{
                 </div>
                 <div className="App">
                     <div className="side-bar-left">
-                         <SideBar onDeleteTickets={this.onDeleteTickets} tickets={this.props.tickets} onCreateTicket={this.onCreateNewTicket}/>
+                         <SideBar errorMsg={this.props.errorMsg} onDeleteTickets={this.onDeleteTickets} tickets={this.props.tickets} onCreateTicket={this.onCreateNewTicket}/>
                     </div>
                     <div className="map-right">
                         <MapContainer tickets={this.props.tickets} ref={this.mapContainerRef}/>
@@ -64,7 +68,8 @@ class App extends React.Component<IAppProps, {}>{
 
 const mapStateToProps = (state:IState, ownProps:any):IAppStateProps => {
     return {
-        tickets: state.tickets
+        tickets: state.tickets,
+        errorMsg: state.errorMsg
     }
 };
 

@@ -86,18 +86,20 @@ class TicketsList extends React.Component<ITicketsListProps, ITicketsListState> 
                                 </IconButton>
                             </ListItemSecondaryAction>
                         </ListItem>
-                        {this.props.tickets.map((ticket) => (
-                            <ListItem key={ticket.id} dense button className={classes.listItem}>
-                                <ListItemText className={classes.listItemText} primary={`${ticket.lat}, ${ticket.lng}`} />
-                                <ListItemSecondaryAction>
-                                    <Checkbox color="primary"
-                                        onChange={this.handleToggle(ticket.id)}
-                                        checked={this.state.checked.indexOf(ticket.id) !== -1}
-                                    />
-                                </ListItemSecondaryAction>
-                            </ListItem>
-                        ))}
-                        <Divider />
+                        {this.props.tickets.length ?  this.props.tickets.map((ticket) => (
+                            <div key={ticket.id}>
+                                <ListItem dense button className={classes.listItem}>
+                                    <ListItemText className={classes.listItemText} primary={`${ticket.lat}, ${ticket.lng}`} />
+                                    <ListItemSecondaryAction>
+                                        <Checkbox color="primary"
+                                            onChange={this.handleToggle(ticket.id)}
+                                            checked={this.state.checked.indexOf(ticket.id) !== -1}
+                                        />
+                                    </ListItemSecondaryAction>
+                                </ListItem>
+                                <Divider />
+                            </div>
+                        )) : <div key="2">No tickets yet. Let's create new ticket!</div>}
                     </List>
                 </div>
             </MuiThemeProvider>

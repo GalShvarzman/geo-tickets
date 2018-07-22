@@ -24,3 +24,10 @@ export function setTicketsAfterDelete(state:IState, action:any){
         tickets: ticketsClone
     }
 }
+
+export function setErrorMsg(state:IState, action:any){
+    return{
+        ...state,
+        errorMsg:action.errorMsg
+    }
+}

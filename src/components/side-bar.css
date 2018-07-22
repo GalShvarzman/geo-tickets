@@ -1,16 +1,20 @@
-input{
-    width: 12em;
-}
-
-.input-wrapper{
-    padding:0.4em 1em;
-}
-
-.save-btn{
-    text-align: center;
-    padding-top: 1em;
+.side-bar-input{
+    display: block;
+    width:90%;
+    margin-bottom: 1em;
 }
 
 .side-bar{
     text-align: center;
+}
+
+.side-bar-create-new-ticket-header{
+    margin-bottom: 0.2em;
+    font-size: 1.4em;
+    color: #22206c;
+}
+
+.save-btn{
+    display: block;
+    margin-top:1em;
 }

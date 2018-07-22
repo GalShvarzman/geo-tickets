@@ -2,11 +2,13 @@ import * as React from 'react';
 import {ITicket} from "../App";
 import TicketsList from "./tickets-list";
 import './side-bar.css';
+import Input from '@material-ui/core/Input';
+import Button from '@material-ui/core/Button';
 
 interface ISideBarProps {
     onCreateTicket(ticket:ITicket):void,
     tickets:ITicket[],
-    onDeleteTickets(ticketsToDeleteIds:string[]):void
+    onDeleteTickets(ticketsToDeleteIds:string[]):void,
 }
 
 class SideBar extends React.PureComponent<ISideBarProps, {}>{
@@ -24,19 +26,35 @@ class SideBar extends React.PureComponent<ISideBarProps, {}>{
         let lat = Number.parseFloat(this.latRef.current!.value);
         let lng = Number.parseFloat(this.lngRef.current!.value);
         this.props.onCreateTicket({lat, lng});
+        this.latRef.current.value = "";
+        this.lngRef.current.value = "";
     };
 
     render(){
         return(
             <div className="side-bar">
-                <div className="input-wrapper">
-                    <label>Lat: </label><input ref={this.latRef} type="number"/>
-                </div>
-                <div className="input-wrapper">
-                    <label>Lng: </label><input ref={this.lngRef} type="number"/>
-                </div>
-                <button className="save-btn" onClick={this.onClickSave}>Save</button>
-
+                <h2 className="side-bar-create-new-ticket-header">Create new ticket</h2>
+                <Input
+                    className="side-bar-input"
+                    type="number"
+                    inputRef={this.latRef}
+                    placeholder="Lat"
+                    inputProps={{
+                        'aria-label': 'Lat'
+                    }}
+                />
+                <Input
+                    className="side-bar-input"
+                    type="number"
+                    inputRef={this.lngRef}
+                    placeholder="Lng"
+                    inputProps={{
+                        'aria-label': 'Lng'
+                    }}
+                />
+                <Button className="save-btn" onClick={this.onClickSave} variant="outlined" color="primary">
+                    Save
+                </Button>
                 <TicketsList onDeleteTickets={this.props.onDeleteTickets} tickets={this.props.tickets}/>
             </div>
         )

@@ -35,13 +35,13 @@ const styles = theme => ({
         backgroundColor: theme.palette.background.paper
     },
     listItemText :{
-        fontSize:"1em"
+        fontSize:'1em'
     },
     button: {
-        margin: theme.spacing.unit,
+        padding:0,
     },
-    deleteButtonWrapper :{
-        display: "inline-block"
+    header:{
+        fontSize:'1.4em'
     }
 });
 
@@ -77,10 +77,15 @@ class TicketsList extends React.Component<ITicketsListProps, ITicketsListState> 
         return (
             <MuiThemeProvider theme={theme}>
                 <div className={classes.root}>
-                    <IconButton onClick={this.onDelete} className={classes.button} aria-label="Delete">
-                        <DeleteIcon />
-                    </IconButton>
                     <List>
+                        <ListItem disabled classes={{root: 'classes-state-root', disabled: 'disabled'}} key="1" dense button>
+                            <ListItemText className={classes.header} primary={`Tickets`} />
+                            <ListItemSecondaryAction>
+                                <IconButton onClick={this.onDelete} className={classes.button} aria-label="Delete">
+                                    <DeleteIcon />
+                                </IconButton>
+                            </ListItemSecondaryAction>
+                        </ListItem>
                         {this.props.tickets.map((ticket) => (
                             <ListItem key={ticket.id} dense button className={classes.listItem}>
                                 <ListItemText className={classes.listItemText} primary={`${ticket.lat}, ${ticket.lng}`} />

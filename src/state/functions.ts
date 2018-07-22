@@ -19,7 +19,6 @@ export function setTicketsAfterDelete(state:IState, action:any){
     ticketsClone = ticketsClone.filter((ticket)=>{
         return action.deletedTicketsIds.indexOf(ticket.id) === -1
     });
-    debugger;
     return{
         ...state,
         tickets: ticketsClone

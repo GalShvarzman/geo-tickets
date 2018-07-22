@@ -6,7 +6,7 @@ import {IState} from "./state/store";
 import {connect} from "react-redux";
 import {Dispatch} from "redux";
 import {onCreateNewTicket, onDeleteTickets} from "./state/actions";
-
+import HeaderAppBar from './components/app-bar';
 export interface ITicket {
     id?:string,
     lat:number,
@@ -45,14 +45,19 @@ class App extends React.Component<IAppProps, {}>{
 
     public render() {
         return (
-            <div className="App">
-                <div className="side-bar-left">
-                     <SideBar onDeleteTickets={this.onDeleteTickets} tickets={this.props.tickets} onCreateTicket={this.onCreateNewTicket}/>
+            <>
+                <div className="header">
+                    <HeaderAppBar/>
                 </div>
-                <div className="map-right">
-                    <MapContainer tickets={this.props.tickets} ref={this.mapContainerRef}/>
+                <div className="App">
+                    <div className="side-bar-left">
+                         <SideBar onDeleteTickets={this.onDeleteTickets} tickets={this.props.tickets} onCreateTicket={this.onCreateNewTicket}/>
+                    </div>
+                    <div className="map-right">
+                        <MapContainer tickets={this.props.tickets} ref={this.mapContainerRef}/>
+                    </div>
                 </div>
-            </div>
+            </>
         );
       }
 }

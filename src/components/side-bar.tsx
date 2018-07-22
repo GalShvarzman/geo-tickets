@@ -5,7 +5,8 @@ import './side-bar.css';
 
 interface ISideBarProps {
     onCreateTicket(ticket:ITicket):void,
-    tickets:ITicket[]
+    tickets:ITicket[],
+    onDeleteTickets(ticketsToDeleteIds:string[]):void
 }
 
 class SideBar extends React.PureComponent<ISideBarProps, {}>{
@@ -36,7 +37,7 @@ class SideBar extends React.PureComponent<ISideBarProps, {}>{
                 </div>
                 <button className="save-btn" onClick={this.onClickSave}>Save</button>
 
-                <TicketsList tickets={this.props.tickets}/>
+                <TicketsList onDeleteTickets={this.props.onDeleteTickets} tickets={this.props.tickets}/>
             </div>
         )
     }

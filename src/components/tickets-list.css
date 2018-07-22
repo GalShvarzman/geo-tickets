@@ -1,9 +1,0 @@
-.tickets-list-ul{
-    list-style: none;
-    max-width: 500px;
-}
-
-.tickets-list-ul li{
-    display: block;
-    width: 100%;
-}

@@ -6,3 +6,5 @@ export const ticketsRouter = express.Router();
 ticketsRouter.post('/', controllers.ticketsController.createNewTicket);
 
 ticketsRouter.get('/', controllers.ticketsController.getAllTickets);
+
+ticketsRouter.delete('/', controllers.ticketsController.deleteTickets)

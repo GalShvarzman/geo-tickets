@@ -76,12 +76,9 @@ class MapContainer extends React.Component<IMapContainerProps, IMapContainerStat
 
     addMarker = (ticket:ITicket) => {
         const marker = this.createNewMarker(ticket.lat, ticket.lng);
-        //this.state.map.panTo({lat:ticket.lat, lng:ticket.lng});
         this.state.map.setCenter(marker.getPosition());
-
         this.setState({markers:this.state.markers.concat([marker])})
     };
-
 
     render() {
         return (

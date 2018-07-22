@@ -1,9 +1,10 @@
 import {IState} from "./store";
-import {setAllTickets, setTicketsAfterCreateNewTicket} from "./functions";
+import {setAllTickets, setTicketsAfterCreateNewTicket, setTicketsAfterDelete} from "./functions";
 
 const options = {
     'SET_TICKETS_AFTER_CREATE_NEW_TICKET' : setTicketsAfterCreateNewTicket,
-    'SET_ALL_TICKETS' : setAllTickets
+    'SET_ALL_TICKETS' : setAllTickets,
+    'SET_TICKETS_AFTER_DELETE' : setTicketsAfterDelete
 };
 
 export function reducer(state:IState, action:any){

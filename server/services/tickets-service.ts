@@ -11,6 +11,10 @@ class TicketsService{
     async getAllTickets(){
         return await db.getAllTickets();
     }
+
+    async deleteTickets(ticketsToDeleteIds:string[]){
+        return await db.deleteTickets(ticketsToDeleteIds)
+    }
 }
 
 const ticketsService = new TicketsService();

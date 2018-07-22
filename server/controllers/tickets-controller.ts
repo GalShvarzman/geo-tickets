@@ -15,6 +15,12 @@ class TicketsController{
         })
     }
 
+    async deleteTickets(req:Request, res:Response, next:NextFunction){
+        tryCatch(next, async()=>{
+            await services.ticketsService.deleteTickets(req.body);
+            res.status(204).send();
+        })
+    }
 }
 
 async function tryCatch(next:NextFunction, func:Function){

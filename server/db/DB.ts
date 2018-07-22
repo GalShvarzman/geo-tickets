@@ -1,6 +1,6 @@
 import {ITicket} from "../models/ticket";
 
-const tickets:ITicket[] = [];
+let tickets:ITicket[] = [];
 
 class TicketsDB {
     async createNewTicket(ticket:ITicket){
@@ -10,6 +10,12 @@ class TicketsDB {
 
     async getAllTickets(){
         return [...tickets];
+    }
+
+    async deleteTickets(ticketsToDeleteIds:string[]){
+        tickets = tickets.filter((ticket)=>{
+            return ticketsToDeleteIds.indexOf(ticket.id) === -1
+        });
     }
 }
 

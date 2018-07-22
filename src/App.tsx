@@ -5,7 +5,7 @@ import SideBar from "./components/side-bar";
 import {IState} from "./state/store";
 import {connect} from "react-redux";
 import {Dispatch} from "redux";
-import {onCreateNewTicket} from "./state/actions";
+import {onCreateNewTicket, onDeleteTickets} from "./state/actions";
 
 export interface ITicket {
     id?:string,
@@ -19,7 +19,8 @@ interface IAppStateProps {
 
 
 interface IAppDispatchProps {
-    onCreateNewTicket(ticket:ITicket):void
+    onCreateNewTicket(ticket:ITicket):void,
+    onDeleteTickets(ticketsToDeleteIds:string[]):void
 }
 
 type IAppProps = IAppStateProps & IAppDispatchProps;
@@ -37,13 +38,16 @@ class App extends React.Component<IAppProps, {}>{
         this.props.onCreateNewTicket(ticket);
     };
 
+    public onDeleteTickets = (ticketsToDeleteIds:string[])=>{
+        this.props.onDeleteTickets(ticketsToDeleteIds);
+    };
 
 
     public render() {
         return (
             <div className="App">
                 <div className="side-bar-left">
-                     <SideBar tickets={this.props.tickets} onCreateTicket={this.onCreateNewTicket}/>
+                     <SideBar onDeleteTickets={this.onDeleteTickets} tickets={this.props.tickets} onCreateTicket={this.onCreateNewTicket}/>
                 </div>
                 <div className="map-right">
                     <MapContainer tickets={this.props.tickets} ref={this.mapContainerRef}/>
@@ -63,6 +67,9 @@ const mapDispatchToProps = (dispatch:Dispatch, ownProps:any):IAppDispatchProps =
     return {
         onCreateNewTicket : (ticket:ITicket) => {
             dispatch(onCreateNewTicket(ticket))
+        },
+        onDeleteTickets : (ticketsToDeleteIds:string[]) => {
+            dispatch(onDeleteTickets(ticketsToDeleteIds))
         }
     }
 };

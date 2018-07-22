@@ -1,6 +1,7 @@
 import * as uuidv4 from 'uuid';
 
 export interface ITicket {
+    id:string,
     lat:number,
     lng:number
 }

@@ -6,18 +6,22 @@ import Typography from '@material-ui/core/Typography';
 
 const styles = {
     root: {
-        width:'100%'
+        width:'100%',
+        height:'100%'
     },
+    appBar:{
+        height:'100%'
+    }
 };
 
 function HeaderAppBar(props) {
     const { classes } = props;
     return (
         <div className={classes.root}>
-            <AppBar position="static" color="primary">
+            <AppBar className={classes.appBar} position="static" color="primary">
                 <Toolbar>
                     <Typography variant="title" color="inherit">
-                        My Tickets
+                        Geo Tickets
                     </Typography>
                 </Toolbar>
             </AppBar>

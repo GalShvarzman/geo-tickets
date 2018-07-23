@@ -1,7 +1,11 @@
 .side-bar-input{
     display: block;
     width:90%;
-    margin-bottom: 1em;
+    margin: 1em auto;
+}
+
+.side-bar-input-label{
+    margin-left: 1em;
 }
 
 .side-bar{
@@ -21,4 +25,12 @@
 
 .side-bar-error-msg{
     color:red;
+}
+
+.form-control{
+    width:100%;
+}
+
+.MuiFormHelperText-root-92{
+    padding-left: 1.2em;
 }

@@ -4,21 +4,25 @@ import * as services from '../services';
 class TicketsController{
 
     async createNewTicket(req:Request, res:Response, next:NextFunction){
-        tryCatch(next, async()=>{
-            res.status(201).json(await services.ticketsService.createNewTicket(req.body));
+        return tryCatch(next, async()=>{
+            res.status(201).json(
+                await services.ticketsService.createNewTicket(req.body)
+            );
         })
     }
 
     async getAllTickets(req:Request, res:Response, next:NextFunction){
-        tryCatch(next, async()=>{
-            res.status(200).json(await services.ticketsService.getAllTickets());
+        return tryCatch(next, async()=>{
+            res.status(200).json(
+                await services.ticketsService.getAllTickets()
+            );
         })
     }
 
     async deleteTickets(req:Request, res:Response, next:NextFunction){
-        tryCatch(next, async()=>{
+        return tryCatch(next, async()=>{
             await services.ticketsService.deleteTickets(req.body);
-            res.status(204).send();
+            res.status(204).send('');
         })
     }
 }

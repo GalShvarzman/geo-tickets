@@ -11,11 +11,13 @@ import blue from '@material-ui/core/colors/blue';
 import Divider from '@material-ui/core/Divider';
 import DeleteIcon from '@material-ui/icons/Delete';
 import IconButton from '@material-ui/core/IconButton';
+import MapContainer from "./map-container";
 
 interface ITicketsListProps {
     tickets:ITicket[],
     classes:any,
-    onDeleteTickets(ticketsToDeleteIds:string[]):void
+    onDeleteTickets(ticketsToDeleteIds:string[]):void,
+    mapRef:React.RefObject<MapContainer>
 }
 
 interface ITicketsListState {
@@ -72,6 +74,10 @@ class TicketsList extends React.Component<ITicketsListProps, ITicketsListState> 
         this.props.onDeleteTickets(this.state.checked);
     };
 
+    centerMarkerOnClick = (ticket) => {
+        this.props.mapRef.current.centerMarkerOnClick(ticket);
+    };
+
     render() {
         const { classes } = this.props;
         return (
@@ -88,7 +94,7 @@ class TicketsList extends React.Component<ITicketsListProps, ITicketsListState> 
                         </ListItem>
                         {this.props.tickets.length ?  this.props.tickets.map((ticket) => (
                             <div key={ticket.id}>
-                                <ListItem dense button className={classes.listItem}>
+                                <ListItem onClick={(e)=>this.centerMarkerOnClick(ticket)} dense button className={classes.listItem}>
                                     <ListItemText className={classes.listItemText} primary={`${ticket.lat}, ${ticket.lng}`} />
                                     <ListItemSecondaryAction>
                                         <Checkbox color="primary"
@@ -99,7 +105,7 @@ class TicketsList extends React.Component<ITicketsListProps, ITicketsListState> 
                                 </ListItem>
                                 <Divider />
                             </div>
-                        )) : <div key="2">No tickets yet. Let's create new ticket!</div>}
+                        )) : <div key="2"><div>No tickets yet.</div><div> Let's create new ticket!</div></div>}
                     </List>
                 </div>
             </MuiThemeProvider>

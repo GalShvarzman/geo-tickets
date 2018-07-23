@@ -55,7 +55,7 @@ class App extends React.Component<IAppProps, {}>{
                 </div>
                 <div className="App">
                     <div className="side-bar-left">
-                         <SideBar errorMsg={this.props.errorMsg} onDeleteTickets={this.onDeleteTickets} tickets={this.props.tickets} onCreateTicket={this.onCreateNewTicket}/>
+                         <SideBar mapRef={this.mapContainerRef} errorMsg={this.props.errorMsg} onDeleteTickets={this.onDeleteTickets} tickets={this.props.tickets} onCreateTicket={this.onCreateNewTicket}/>
                     </div>
                     <div className="map-right">
                         <MapContainer tickets={this.props.tickets} ref={this.mapContainerRef}/>

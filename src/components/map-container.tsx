@@ -1,17 +1,21 @@
 import * as React from 'react';
 import {ITicket} from "../App";
 import Script from 'react-load-script';
+import {IGoogle, IMarker} from "../infrastructure/google";
 
-declare const google:any;
-
-interface IMapContainerProps {
-    tickets:ITicket[]
-}
+declare const google:IGoogle;
 
 interface IMapContainerState {
-    map?:any,
-    markers:any[];
+    map?:{
+        setCenter(position : {}):void,
+        panTo(position : {})
+    },
+    markers:IMarker[];
     scriptLoaded:boolean
+}
+
+export interface IMapContainerProps {
+    tickets:ITicket[]
 }
 
 class MapContainer extends React.Component<IMapContainerProps, IMapContainerState>{
@@ -30,7 +34,7 @@ class MapContainer extends React.Component<IMapContainerProps, IMapContainerStat
     loadMap = ()=>{
         let map = new google.maps.Map(this.mapRef, {
             center: {lat: 32.109333, lng: 34.855499},
-            zoom: 8
+            zoom: 13
         });
 
         this.setState({map}, ()=>{
@@ -52,19 +56,28 @@ class MapContainer extends React.Component<IMapContainerProps, IMapContainerStat
         const markers = this.props.tickets.map((ticket) => {
             return this.createNewMarker(ticket.lat, ticket.lng);
         });
-        this.setState({markers: this.state.markers.concat([markers])})
+        this.setState({markers: this.state.markers.concat([...markers])})
     };
 
-    markerEventListener = (marker) => {
+    markerClickEventListener = (marker) => {
         let infoWindow = new google.maps.InfoWindow({
             content: `<p>Marker Location:${marker.getPosition()}</p>`
         });
 
-        google.maps.event.addListener(marker, 'click', (event) => {
-            debugger;
-            this.state.map.setCenter(marker.getPosition());
+        google.maps.event.addListener(marker, 'click', () => {
+            this.state.map.panTo(marker.getPosition());
             infoWindow.open(this.state.map, marker);
         });
+    };
+
+    centerMarkerOnClick = (ticket:ITicket) => {
+        const markersClone = [...this.state.markers];
+        const selectedMarker = markersClone.find((marker:IMarker) => {
+            return marker.position.lat() === ticket.lat && marker.position.lng() === ticket.lng;
+        });
+        if(selectedMarker){
+            this.state.map.panTo(selectedMarker.getPosition());
+        }
     };
 
     componentWillUnmount(){
@@ -74,7 +87,6 @@ class MapContainer extends React.Component<IMapContainerProps, IMapContainerStat
     }
 
     onAddNewTicket = async(ticket:ITicket) => {
-        debugger;
         return await this.addMarker(ticket);
     };
 
@@ -86,13 +98,15 @@ class MapContainer extends React.Component<IMapContainerProps, IMapContainerStat
 
         let markersClone = [...this.state.markers];
         for(let i = 0; i<markersClone.length; i++){
-            const lat = markersClone[i].position.lat();
-            const lng = markersClone[i].position.lng();
+            const marker =  markersClone[i];
+            const markerPosition = marker.position;
+            const markerLat = markerPosition.lat();
+            const marketLng = markerPosition.lng();
             const ticketIndex = deletedTickets.findIndex((ticket:ITicket)=>{
-                return ticket.lat === lat && ticket.lng === lng;
+                return ticket.lat === markerLat && ticket.lng === marketLng;
             });
             if(ticketIndex !== -1){
-                markersClone[i].setMap(null);
+                marker.setMap(null);
             }
         }
         this.setState({markers:markersClone});
@@ -103,7 +117,7 @@ class MapContainer extends React.Component<IMapContainerProps, IMapContainerStat
             position: {lat, lng},
             map: this.state.map
         });
-        this.markerEventListener(marker);
+        this.markerClickEventListener(marker);
         return marker;
     };
 

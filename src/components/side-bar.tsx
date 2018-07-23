@@ -55,15 +55,15 @@ class SideBar extends React.PureComponent<ISideBarProps, ISideBarState>{
     };
 
     isValid = () => {
-         return this.isLatValid && this.isLngValid();
+         return this.isLatValid() && this.isLngValid();
     };
 
     isLatValid = () => {
-        return (/\d+\.\d+/).test(this.state.lat);
+        return (/^(-?\d+(\.\d+)?)$/).test(this.state.lat);
     };
 
     isLngValid = () => {
-        return (/\d+\.\d+/).test(this.state.lng);
+        return (/^(-?\d+(\.\d+)?)$/).test(this.state.lng);
     };
 
     render(){
@@ -82,7 +82,7 @@ class SideBar extends React.PureComponent<ISideBarProps, ISideBarState>{
                         id="lat"
                         className="side-bar-input"
                         value={this.state.lat}
-                        type="number"
+                        type="text"
                         onChange={(e)=>{this.handleChange('lat', e.target.value)}}
                         inputProps={{
                             'aria-label': 'Lat'
@@ -96,7 +96,7 @@ class SideBar extends React.PureComponent<ISideBarProps, ISideBarState>{
                         id="lng"
                         className="side-bar-input"
                         value={this.state.lng}
-                        type="number"
+                        type="text"
                         onChange={(e)=>{this.handleChange('lng', e.target.value)}}
                         inputProps={{
                             'aria-label': 'Lng'
